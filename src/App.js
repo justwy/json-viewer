@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState } from 'react';
+import { Col, Row, Space, Switch, } from 'antd';
+import JsonFormatter from './JsonFormatter';
+
+const themes = [];
 
 function App() {
+  const [hideRight, setHideRight] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Space direction="vertical" size="small" style={{ display: 'flex' }}>
+      <h1>
+        JSON Viewer and formatter!
+      </h1>
+
+      <Switch checkedChildren="Side by side" unCheckedChildren="Side by side" defaultChecked checked={!hideRight}
+        onChange={e => setHideRight(!hideRight)} />
+
+      <Row wrap={false} gutter={12}>
+        <Col span={hideRight ? 24 : 12}>
+          <JsonFormatter appId="1" count={hideRight ? 1 : 2}/>
+        </Col>
+        {!hideRight &&
+          <Col span={12}>
+            <JsonFormatter appId="2" count={hideRight ? 1 : 2}/>
+          </Col>
+        }
+      </Row>
+    </Space>
   );
 }
 
